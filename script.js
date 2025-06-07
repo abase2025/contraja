@@ -1059,11 +1059,9 @@ function exportarPDF() {
         const assinLocador = assinaturaLocador || JSON.parse(localStorage.getItem('assinatura_locador') || 'null');
         const assinLocatario = assinaturaLocatario || JSON.parse(localStorage.getItem('assinatura_locatario') || 'null');
         
-        // Só adicionar seção de assinaturas se houver pelo menos uma assinatura válida E sem caracteres %P
-        const temAssinaturaValidaLocador = assinLocador && assinLocador.data && !assinLocador.data.includes('%P') && assinLocador.data.length > 100;
-        const temAssinaturaValidaLocatario = assinLocatario && assinLocatario.data && !assinLocatario.data.includes('%P') && assinLocatario.data.length > 100;
-        
-        if (temAssinaturaValidaLocador || temAssinaturaValidaLocatario) {
+        // Só adicionar seção de assinaturas se houver pelo menos uma assinatura válida
+        if ((assinLocador && assinLocador.data && !assinLocador.data.includes('%P')) || 
+            (assinLocatario && assinLocatario.data && !assinLocatario.data.includes('%P'))) {
             y = adicionarAssinaturasAoPDF(doc, y);
         }
         
@@ -2324,23 +2322,26 @@ function salvarAssinatura() {
         return;
     }
     
-    // Verificar e limpar dados da assinatura usando a nova função
+    // Verificar e limpar dados da assinatura
     let dadosLimpos = signatureData;
     
     // Se for objeto com propriedade data
     if (typeof signatureData === 'object' && signatureData.data) {
-        // Usar a nova função de limpeza
-        const dadosBase64Limpos = limparDadosBase64(signatureData.data);
-        
-        if (!dadosBase64Limpos) {
-            mostrarAlerta('Erro: Dados da assinatura estão corrompidos. Tente desenhar novamente.', 'error');
-            return;
-        }
-        
         dadosLimpos = {
             ...signatureData,
-            data: 'data:image/png;base64,' + dadosBase64Limpos
+            data: signatureData.data
         };
+        
+        // Verificar se os dados base64 estão corretos
+        if (dadosLimpos.data && typeof dadosLimpos.data === 'string') {
+            // Remover caracteres inválidos como %P
+            dadosLimpos.data = dadosLimpos.data.replace(/%P/g, '');
+            
+            // Garantir que está em formato base64 correto
+            if (!dadosLimpos.data.startsWith('data:image/')) {
+                dadosLimpos.data = 'data:image/png;base64,' + dadosLimpos.data.replace(/^data:image\/[^;]+;base64,/, '');
+            }
+        }
     }
     
     // Rastrear criação de assinatura digital
@@ -2408,8 +2409,8 @@ function adicionarAssinaturaAoContrato(textoContrato) {
     const assinLocatario = assinaturaLocatario || JSON.parse(localStorage.getItem('assinatura_locatario') || 'null');
     
     // Só adicionar seção de assinaturas se houver pelo menos uma assinatura válida
-    const temAssinaturaValidaLocador = assinLocador && assinLocador.data && !assinLocador.data.includes('%P') && assinLocador.data.length > 100;
-    const temAssinaturaValidaLocatario = assinLocatario && assinLocatario.data && !assinLocatario.data.includes('%P') && assinLocatario.data.length > 100;
+    const temAssinaturaValidaLocador = assinLocador && assinLocador.data && !assinLocador.data.includes('%P');
+    const temAssinaturaValidaLocatario = assinLocatario && assinLocatario.data && !assinLocatario.data.includes('%P');
     
     if (!temAssinaturaValidaLocador && !temAssinaturaValidaLocatario) {
         return textoContrato; // Retorna contrato sem seção de assinaturas
@@ -2875,52 +2876,18 @@ setInterval(() => {
 
 
 
-// Função para limpar e validar dados base64 de assinatura
-function limparDadosBase64(dados) {
-    if (!dados || typeof dados !== 'string') {
-        return null;
-    }
-    
-    // Remover TODOS os caracteres %P e outros caracteres inválidos
-    let dadosLimpos = dados.replace(/%P/g, '').replace(/[^A-Za-z0-9+/=]/g, '');
-    
-    // Remover prefixo data:image se existir
-    if (dadosLimpos.includes('data:image')) {
-        const partes = dadosLimpos.split(',');
-        if (partes.length > 1) {
-            dadosLimpos = partes[1];
-        }
-    }
-    
-    // Validar formato base64
-    const base64Regex = /^[A-Za-z0-9+/]*={0,2}$/;
-    if (!base64Regex.test(dadosLimpos)) {
-        console.warn('Dados base64 inválidos detectados');
-        return null;
-    }
-    
-    // Verificar tamanho mínimo
-    if (dadosLimpos.length < 100) {
-        console.warn('Dados base64 muito pequenos');
-        return null;
-    }
-    
-    return dadosLimpos;
-}
-
 // Função para adicionar assinaturas visuais ao PDF
 function adicionarAssinaturasAoPDF(doc, y) {
     // Carregar assinaturas salvas
     const assinLocador = assinaturaLocador || JSON.parse(localStorage.getItem('assinatura_locador') || 'null');
     const assinLocatario = assinaturaLocatario || JSON.parse(localStorage.getItem('assinatura_locatario') || 'null');
     
-    // Limpar e validar dados das assinaturas
-    const dadosLocadorLimpos = assinLocador && assinLocador.data ? limparDadosBase64(assinLocador.data) : null;
-    const dadosLocatarioLimpos = assinLocatario && assinLocatario.data ? limparDadosBase64(assinLocatario.data) : null;
+    // Verificar se há assinaturas válidas
+    const temAssinaturaValidaLocador = assinLocador && assinLocador.data && !assinLocador.data.includes('%P') && assinLocador.data.length > 100;
+    const temAssinaturaValidaLocatario = assinLocatario && assinLocatario.data && !assinLocatario.data.includes('%P') && assinLocatario.data.length > 100;
     
-    // Se não há assinaturas válidas, não adicionar seção
-    if (!dadosLocadorLimpos && !dadosLocatarioLimpos) {
-        console.log('Nenhuma assinatura válida encontrada - não adicionando seção ao PDF');
+    // Se não há assinaturas válidas, não adicionar nada
+    if (!temAssinaturaValidaLocador && !temAssinaturaValidaLocatario) {
         return y;
     }
     
@@ -2947,18 +2914,29 @@ function adicionarAssinaturasAoPDF(doc, y) {
     y += 20;
     
     // Assinatura do Locador APENAS se válida
-    if (dadosLocadorLimpos) {
+    if (temAssinaturaValidaLocador) {
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(12);
         doc.text('LOCADOR:', 15, y);
         y += 10;
         
         try {
-            // Usar dados limpos e validados
-            const imagemCompleta = 'data:image/png;base64,' + dadosLocadorLimpos;
-            doc.addImage(imagemCompleta, 'PNG', 15, y, 80, 25);
-            y += 30;
-            console.log('Assinatura do locador adicionada com sucesso ao PDF');
+            // Verificar se a imagem está em formato base64 válido
+            let imageData = assinLocador.data;
+            
+            // Limpar dados base64 se necessário
+            if (imageData.startsWith('data:image/')) {
+                imageData = imageData.split(',')[1];
+            }
+            
+            // Verificar se é base64 válido e não contém caracteres %P
+            if (imageData && imageData.length > 100 && !imageData.includes('%P') && /^[A-Za-z0-9+/]*={0,2}$/.test(imageData)) {
+                // Adicionar imagem da assinatura com formato correto
+                doc.addImage('data:image/png;base64,' + imageData, 'PNG', 15, y, 80, 25);
+                y += 30;
+            } else {
+                throw new Error('Dados de imagem inválidos ou corrompidos');
+            }
         } catch (error) {
             console.error('Erro ao adicionar assinatura do locador:', error);
             doc.setFont('helvetica', 'normal');
@@ -2974,18 +2952,29 @@ function adicionarAssinaturasAoPDF(doc, y) {
     }
     
     // Assinatura do Locatário APENAS se válida
-    if (dadosLocatarioLimpos) {
+    if (temAssinaturaValidaLocatario) {
         doc.setFont('helvetica', 'bold');
         doc.setFontSize(12);
         doc.text('LOCATÁRIO:', 15, y);
         y += 10;
         
         try {
-            // Usar dados limpos e validados
-            const imagemCompleta = 'data:image/png;base64,' + dadosLocatarioLimpos;
-            doc.addImage(imagemCompleta, 'PNG', 15, y, 80, 25);
-            y += 30;
-            console.log('Assinatura do locatário adicionada com sucesso ao PDF');
+            // Verificar se a imagem está em formato base64 válido
+            let imageData = assinLocatario.data;
+            
+            // Limpar dados base64 se necessário
+            if (imageData.startsWith('data:image/')) {
+                imageData = imageData.split(',')[1];
+            }
+            
+            // Verificar se é base64 válido e não contém caracteres %P
+            if (imageData && imageData.length > 100 && !imageData.includes('%P') && /^[A-Za-z0-9+/]*={0,2}$/.test(imageData)) {
+                // Adicionar imagem da assinatura com formato correto
+                doc.addImage('data:image/png;base64,' + imageData, 'PNG', 15, y, 80, 25);
+                y += 30;
+            } else {
+                throw new Error('Dados de imagem inválidos ou corrompidos');
+            }
         } catch (error) {
             console.error('Erro ao adicionar assinatura do locatário:', error);
             doc.setFont('helvetica', 'normal');
