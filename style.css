@@ -1,0 +1,1447 @@
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.main-container {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    margin: 20px auto;
+    max-width: 1400px;
+    overflow: hidden;
+}
+
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 40px;
+    text-align: center;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 3rem;
+    font-weight: 300;
+    letter-spacing: 2px;
+}
+
+.header p {
+    margin: 15px 0 0 0;
+    opacity: 0.9;
+    font-size: 1.2rem;
+}
+
+.header small {
+    opacity: 0.8;
+    font-size: 0.9rem;
+}
+
+/* Seletor de Tipo de Contrato */
+.contract-selector {
+    padding: 50px 30px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+}
+
+.selector-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.selector-header h3 {
+    color: #667eea;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+.selector-header p {
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.contract-type-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    height: 100%;
+    border: 3px solid transparent;
+    position: relative;
+    overflow: hidden;
+}
+
+.contract-type-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.contract-type-card:hover::before {
+    left: 100%;
+}
+
+.contract-type-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 50px rgba(102, 126, 234, 0.2);
+    border-color: #667eea;
+}
+
+.card-icon {
+    font-size: 5rem;
+    color: #667eea;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    text-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+}
+
+.contract-type-card:hover .card-icon {
+    transform: scale(1.2) rotate(5deg);
+    color: #764ba2;
+    text-shadow: 0 6px 12px rgba(118, 75, 162, 0.4);
+}
+
+/* Ícones específicos com animações */
+.card-icon .fa-home {
+    position: relative;
+}
+
+.card-icon .fa-home::before {
+    content: "🏠";
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+    font-size: 4.5rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+}
+
+.contract-type-card:hover .card-icon .fa-home::before {
+    transform: translate(-50%, -50%) scale(1.1) rotate(-5deg);
+}
+
+.card-icon .fa-car {
+    position: relative;
+}
+
+.card-icon .fa-car::before {
+    content: "🚗";
+    font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif;
+    font-size: 4.5rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: all 0.3s ease;
+}
+
+.contract-type-card:hover .card-icon .fa-car::before {
+    transform: translate(-50%, -50%) scale(1.1) translateX(5px);
+}
+
+.contract-type-card h4 {
+    color: #333;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.contract-type-card p {
+    color: #666;
+    margin-bottom: 25px;
+    font-size: 1rem;
+}
+
+.features-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.features-list li {
+    padding: 8px 0;
+    color: #555;
+    font-size: 0.95rem;
+}
+
+.features-list i {
+    color: #28a745;
+    margin-right: 10px;
+    width: 16px;
+}
+
+.card-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.contract-type-card:hover .card-button {
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* Interface Principal */
+.main-interface {
+    padding: 0;
+}
+
+.breadcrumb-container {
+    background: #f8f9fa;
+    padding: 15px 30px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.breadcrumb {
+    margin: 0;
+    background: none;
+    padding: 0;
+}
+
+.breadcrumb-item a {
+    color: #667eea;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.breadcrumb-item a:hover {
+    color: #764ba2;
+}
+
+.nav-tabs {
+    border-bottom: none;
+    background: #f8f9fa;
+    padding: 0 30px;
+}
+
+.nav-tabs .nav-link {
+    border: none;
+    color: #666;
+    font-weight: 500;
+    padding: 15px 25px;
+    margin-right: 10px;
+    border-radius: 10px 10px 0 0;
+    transition: all 0.3s ease;
+}
+
+.nav-tabs .nav-link.active {
+    background: white;
+    color: #667eea;
+    border-bottom: 3px solid #667eea;
+}
+
+.nav-tabs .nav-link:hover:not(.active) {
+    background: rgba(102, 126, 234, 0.1);
+    color: #667eea;
+}
+
+.tab-content {
+    padding: 30px;
+}
+
+.form-section {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+    border-left: 5px solid #667eea;
+    transition: all 0.3s ease;
+}
+
+.form-section:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.form-section h4 {
+    color: #667eea;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.form-control, .form-select {
+    border-radius: 10px;
+    border: 2px solid #e9ecef;
+    padding: 12px 15px;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 10px;
+    padding: 12px 30px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+}
+
+.btn-success {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    border: none;
+    border-radius: 10px;
+    padding: 12px 25px;
+    font-weight: 500;
+    margin: 5px;
+    transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(40, 167, 69, 0.3);
+}
+
+.btn-info {
+    background: linear-gradient(135deg, #17a2b8 0%, #6f42c1 100%);
+    border: none;
+    border-radius: 10px;
+    padding: 12px 25px;
+    font-weight: 500;
+    margin: 5px;
+    transition: all 0.3s ease;
+}
+
+.btn-info:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(23, 162, 184, 0.3);
+}
+
+.contrato-preview {
+    background: white;
+    border: 2px solid #e9ecef;
+    border-radius: 15px;
+    padding: 30px;
+    font-family: 'Times New Roman', serif;
+    line-height: 1.6;
+    max-height: 600px;
+    overflow-y: auto;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.contrato-preview h2 {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.contrato-preview p {
+    text-align: justify;
+    margin-bottom: 15px;
+}
+
+.contrato-preview .clausula {
+    margin-bottom: 20px;
+}
+
+.export-buttons {
+    text-align: center;
+    margin-top: 30px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 15px;
+}
+
+.footer {
+    text-align: center;
+    padding: 20px;
+    background: #f8f9fa;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Animações */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.contract-type-card {
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.contract-type-card:nth-child(2) {
+    animation-delay: 0.2s;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .main-container {
+        margin: 10px;
+        border-radius: 15px;
+    }
+    
+    .header h1 {
+        font-size: 2.5rem;
+    }
+    
+    .header p {
+        font-size: 1rem;
+    }
+    
+    .contract-selector {
+        padding: 30px 20px;
+    }
+    
+    .selector-header h3 {
+        font-size: 1.5rem;
+    }
+    
+    .contract-type-card {
+        padding: 30px 20px;
+        margin-bottom: 20px;
+    }
+    
+    .card-icon {
+        font-size: 3rem;
+    }
+    
+    .tab-content {
+        padding: 20px;
+    }
+    
+    .form-section {
+        padding: 20px;
+    }
+    
+    .export-buttons .btn {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+    }
+}
+
+/* Estilos para impressão */
+@media print {
+    body {
+        background: white !important;
+    }
+    
+    .main-container {
+        box-shadow: none !important;
+        border-radius: 0 !important;
+        margin: 0 !important;
+        max-width: none !important;
+    }
+    
+    .header, .nav-tabs, .export-buttons, .footer, .breadcrumb-container {
+        display: none !important;
+    }
+    
+    .tab-content {
+        padding: 0 !important;
+    }
+    
+    .contrato-preview {
+        border: none !important;
+        padding: 0 !important;
+        max-height: none !important;
+        overflow: visible !important;
+        box-shadow: none !important;
+    }
+}
+
+
+
+/* ========================================
+   OTIMIZAÇÕES PARA DISPOSITIVOS MÓVEIS
+   ======================================== */
+
+/* Meta viewport para dispositivos móveis */
+@viewport {
+    width: device-width;
+    initial-scale: 1.0;
+    maximum-scale: 1.0;
+    user-scalable: no;
+}
+
+/* Otimizações gerais para mobile */
+@media screen and (max-width: 768px) {
+    body {
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background-attachment: fixed;
+    }
+
+    .main-container {
+        margin: 0;
+        border-radius: 0;
+        min-height: 100vh;
+        box-shadow: none;
+    }
+
+    .header {
+        padding: 20px 15px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .header h1 {
+        font-size: 2rem;
+        letter-spacing: 1px;
+        margin-bottom: 10px;
+    }
+
+    .header p {
+        font-size: 1rem;
+        margin: 10px 0;
+    }
+
+    .header small {
+        font-size: 0.8rem;
+    }
+
+    /* Seletor de contratos mobile */
+    .contract-selector {
+        padding: 20px 15px;
+        background: white;
+    }
+
+    .selector-header h3 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    .selector-header p {
+        font-size: 1rem;
+        margin-bottom: 25px;
+    }
+
+    .contract-type-card {
+        padding: 25px 20px;
+        margin-bottom: 20px;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+    }
+
+    .contract-type-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .card-icon {
+        font-size: 3.5rem;
+        margin-bottom: 15px;
+    }
+
+    .contract-type-card h4 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+    }
+
+    .contract-type-card p {
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+    }
+
+    .contract-type-card ul {
+        font-size: 0.85rem;
+        margin-bottom: 20px;
+    }
+
+    .contract-type-card .btn {
+        padding: 12px 25px;
+        font-size: 1rem;
+        border-radius: 25px;
+        min-height: 44px; /* Tamanho mínimo para touch */
+    }
+}
+
+/* Otimizações específicas para iPhone */
+@media screen and (max-width: 414px) {
+    .header h1 {
+        font-size: 1.8rem;
+    }
+
+    .contract-type-card {
+        padding: 20px 15px;
+    }
+
+    .card-icon {
+        font-size: 3rem;
+    }
+
+    .contract-type-card h4 {
+        font-size: 1.2rem;
+    }
+
+    .contract-type-card p {
+        font-size: 0.85rem;
+    }
+
+    .contract-type-card ul {
+        font-size: 0.8rem;
+    }
+}
+
+/* Formulários mobile */
+@media screen and (max-width: 768px) {
+    .content-area {
+        padding: 15px;
+    }
+
+    .breadcrumb {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+
+    .nav-tabs {
+        border-bottom: none;
+        margin-bottom: 20px;
+    }
+
+    .nav-tabs .nav-link {
+        padding: 12px 20px;
+        font-size: 0.9rem;
+        border-radius: 25px;
+        margin: 0 5px 10px 0;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .form-section {
+        margin-bottom: 25px;
+        padding: 20px 15px;
+        border-radius: 15px;
+    }
+
+    .form-section h5 {
+        font-size: 1.1rem;
+        margin-bottom: 15px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .form-control {
+        padding: 12px 15px;
+        font-size: 16px; /* Evita zoom no iOS */
+        border-radius: 10px;
+        border: 2px solid #e9ecef;
+        min-height: 44px; /* Tamanho mínimo para touch */
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        outline: none;
+    }
+
+    .btn {
+        padding: 12px 20px;
+        font-size: 1rem;
+        border-radius: 25px;
+        min-height: 44px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+}
+
+/* Visualização de contrato mobile */
+@media screen and (max-width: 768px) {
+    .contract-preview {
+        max-height: 60vh;
+        overflow-y: auto;
+        padding: 15px;
+        font-size: 0.85rem;
+        line-height: 1.5;
+        border-radius: 10px;
+        background: white;
+        box-shadow: inset 0 2px 10px rgba(0,0,0,0.1);
+        -webkit-overflow-scrolling: touch; /* Scroll suave no iOS */
+    }
+
+    .contract-preview h1,
+    .contract-preview h2,
+    .contract-preview h3 {
+        font-size: 1.1rem;
+        margin: 15px 0 10px 0;
+        color: #333;
+    }
+
+    .contract-preview p {
+        margin-bottom: 12px;
+        text-align: justify;
+    }
+
+    .export-buttons {
+        padding: 20px 15px;
+        background: #f8f9fa;
+        border-radius: 0 0 15px 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .export-buttons .btn {
+        width: 100%;
+        padding: 15px;
+        font-size: 1rem;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .btn-success {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        border: none;
+    }
+
+    .btn-info {
+        background: linear-gradient(135deg, #17a2b8 0%, #007bff 100%);
+        border: none;
+    }
+
+    .btn-secondary {
+        background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+        border: none;
+    }
+}
+
+/* Otimizações para landscape mobile */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+    .header {
+        padding: 15px;
+    }
+
+    .header h1 {
+        font-size: 1.5rem;
+    }
+
+    .contract-preview {
+        max-height: 50vh;
+    }
+
+    .form-section {
+        padding: 15px 10px;
+    }
+}
+
+/* Otimizações específicas para Android */
+@media screen and (max-width: 768px) {
+    /* Melhor suporte para diferentes densidades de tela Android */
+    .form-control,
+    .btn {
+        -webkit-appearance: none;
+        appearance: none;
+    }
+
+    /* Otimização para teclados Android */
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    textarea,
+    select {
+        font-size: 16px; /* Evita zoom automático */
+        -webkit-appearance: none;
+        appearance: none;
+    }
+}
+
+/* Melhorias para acessibilidade touch */
+@media (hover: none) and (pointer: coarse) {
+    .contract-type-card:hover {
+        transform: none;
+    }
+
+    .contract-type-card:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+    }
+
+    .btn:hover {
+        transform: none;
+    }
+
+    .btn:active {
+        transform: scale(0.98);
+        transition: transform 0.1s ease;
+    }
+}
+
+/* Otimizações para telas muito pequenas */
+@media screen and (max-width: 320px) {
+    .header h1 {
+        font-size: 1.5rem;
+    }
+
+    .contract-type-card {
+        padding: 15px 10px;
+    }
+
+    .card-icon {
+        font-size: 2.5rem;
+    }
+
+    .form-control {
+        padding: 10px 12px;
+    }
+
+    .btn {
+        padding: 10px 15px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Melhorias para PWA e fullscreen */
+@media screen and (display-mode: standalone) {
+    .main-container {
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+}
+
+/* Otimizações para notch do iPhone */
+@supports (padding: max(0px)) {
+    .header {
+        padding-top: max(20px, env(safe-area-inset-top));
+        padding-left: max(15px, env(safe-area-inset-left));
+        padding-right: max(15px, env(safe-area-inset-right));
+    }
+
+    .content-area {
+        padding-left: max(15px, env(safe-area-inset-left));
+        padding-right: max(15px, env(safe-area-inset-right));
+        padding-bottom: max(15px, env(safe-area-inset-bottom));
+    }
+}
+
+/* Animações otimizadas para mobile */
+@media screen and (max-width: 768px) {
+    * {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    .contract-type-card,
+    .btn,
+    .form-control {
+        transition: all 0.2s ease;
+    }
+
+    /* Scroll personalizado para webkit */
+    .contract-preview::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .contract-preview::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 3px;
+    }
+
+    .contract-preview::-webkit-scrollbar-thumb {
+        background: #667eea;
+        border-radius: 3px;
+    }
+
+    .contract-preview::-webkit-scrollbar-thumb:hover {
+        background: #764ba2;
+    }
+}
+
+/* Loading states para mobile */
+.loading-mobile {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(102, 126, 234, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    backdrop-filter: blur(5px);
+}
+
+.loading-mobile .spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(255, 255, 255, 0.3);
+    border-top: 4px solid white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Melhorias para notificações mobile */
+.alert {
+    border-radius: 10px;
+    padding: 15px;
+    margin: 10px 15px;
+    font-size: 0.9rem;
+}
+
+.alert-success {
+    background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+    border: 1px solid #28a745;
+    color: #155724;
+}
+
+/* Otimizações finais para performance mobile */
+@media screen and (max-width: 768px) {
+    .main-container {
+        will-change: transform;
+    }
+
+    .contract-type-card {
+        will-change: transform;
+    }
+
+    .btn {
+        will-change: transform;
+    }
+}
+
+
+/* ==========================
+   UPLOAD FUNCTIONALITY STYLES
+   ========================== */
+
+/* Card Buttons Layout */
+.card-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.card-button.primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+}
+
+.card-button.secondary {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+    border: none;
+}
+
+.card-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+}
+
+/* Upload Modal Styles */
+.upload-container {
+    padding: 20px 0;
+}
+
+.upload-area {
+    border: 3px dashed #667eea;
+    border-radius: 15px;
+    padding: 40px 20px;
+    text-align: center;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.upload-area:hover {
+    border-color: #764ba2;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    transform: translateY(-2px);
+}
+
+.upload-area.dragover {
+    border-color: #f5576c;
+    background: linear-gradient(135deg, rgba(245, 87, 108, 0.1) 0%, rgba(240, 147, 251, 0.1) 100%);
+    transform: scale(1.02);
+}
+
+.upload-icon {
+    font-size: 4rem;
+    color: #667eea;
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+}
+
+.upload-area:hover .upload-icon {
+    color: #764ba2;
+    transform: scale(1.1);
+}
+
+.upload-content h4 {
+    color: #333;
+    margin-bottom: 10px;
+    font-weight: 600;
+}
+
+.upload-content p {
+    color: #666;
+    margin-bottom: 20px;
+}
+
+.supported-formats {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.format-badge {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.upload-progress {
+    text-align: center;
+    padding: 20px;
+}
+
+.upload-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #667eea;
+    font-weight: 500;
+}
+
+.upload-result {
+    text-align: center;
+    padding: 20px 0;
+}
+
+/* Progress Bar Custom Styling */
+.progress {
+    height: 8px;
+    border-radius: 10px;
+    background: rgba(102, 126, 234, 0.1);
+}
+
+.progress-bar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 10px;
+}
+
+/* Mobile Optimizations for Upload */
+@media (max-width: 768px) {
+    .upload-area {
+        padding: 30px 15px;
+    }
+    
+    .upload-icon {
+        font-size: 3rem;
+    }
+    
+    .upload-content h4 {
+        font-size: 1.2rem;
+    }
+    
+    .supported-formats {
+        gap: 5px;
+    }
+    
+    .format-badge {
+        font-size: 0.7rem;
+        padding: 4px 8px;
+    }
+    
+    .card-buttons {
+        gap: 8px;
+    }
+}
+
+/* Animation for file processing */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.upload-area.processing {
+    animation: pulse 2s infinite;
+    border-color: #f5576c;
+}
+
+/* Success state */
+.upload-area.success {
+    border-color: #28a745;
+    background: linear-gradient(135deg, rgba(40, 167, 69, 0.1) 0%, rgba(40, 167, 69, 0.05) 100%);
+}
+
+.upload-area.success .upload-icon {
+    color: #28a745;
+}
+
+/* Error state */
+.upload-area.error {
+    border-color: #dc3545;
+    background: linear-gradient(135deg, rgba(220, 53, 69, 0.1) 0%, rgba(220, 53, 69, 0.05) 100%);
+}
+
+.upload-area.error .upload-icon {
+    color: #dc3545;
+}
+
+
+/* ===========================
+   ASSINATURA DIGITAL STYLES
+   =========================== */
+
+/* Signature Modal */
+.signature-container {
+    padding: 10px 0;
+}
+
+.signature-tabs .nav-pills .nav-link {
+    background: transparent;
+    border: 2px solid #667eea;
+    color: #667eea;
+    margin: 0 5px;
+    border-radius: 25px;
+    padding: 8px 20px;
+    transition: all 0.3s ease;
+}
+
+.signature-tabs .nav-pills .nav-link.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-color: #667eea;
+    color: white;
+}
+
+.signature-tabs .nav-pills .nav-link:hover {
+    background: rgba(102, 126, 234, 0.1);
+    transform: translateY(-2px);
+}
+
+/* Signature Pad */
+.signature-pad-container {
+    text-align: center;
+}
+
+.signature-pad-wrapper {
+    position: relative;
+    display: inline-block;
+    border: 3px dashed #667eea;
+    border-radius: 15px;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+.signature-pad {
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    background: white;
+    cursor: crosshair;
+    display: block;
+    width: 100%;
+    max-width: 500px;
+    height: 200px;
+    touch-action: none; /* Importante para touch devices */
+}
+
+.signature-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.signature-placeholder {
+    color: #ccc;
+    font-size: 18px;
+    font-style: italic;
+    opacity: 0.7;
+}
+
+.signature-pad.has-signature + .signature-overlay {
+    display: none;
+}
+
+/* Color Picker */
+.color-picker {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.color-btn {
+    width: 30px;
+    height: 30px;
+    border: 3px solid transparent;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.color-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.color-btn.active {
+    border-color: #667eea;
+    transform: scale(1.2);
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+}
+
+/* Typed Signature */
+.typed-signature-container {
+    text-align: center;
+}
+
+.font-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.font-btn {
+    background: white;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+}
+
+.font-btn:hover {
+    border-color: #667eea;
+    background: rgba(102, 126, 234, 0.05);
+    transform: translateY(-2px);
+}
+
+.font-btn.active {
+    border-color: #667eea;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.2);
+}
+
+.signature-preview-box {
+    border: 2px dashed #667eea;
+    border-radius: 10px;
+    background: white;
+    padding: 30px;
+    min-height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.signature-preview-text {
+    font-size: 28px;
+    color: #333;
+    font-family: 'Brush Script MT', cursive;
+}
+
+/* Signature Actions */
+.signature-actions .btn {
+    border-radius: 25px;
+    padding: 10px 20px;
+    font-weight: 500;
+}
+
+.signature-preview-result {
+    text-align: center;
+}
+
+.signature-preview-mini {
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    display: inline-block;
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    .signature-pad {
+        height: 150px;
+        max-width: 100%;
+    }
+    
+    .signature-pad-wrapper {
+        padding: 15px;
+    }
+    
+    .signature-tabs .nav-pills .nav-link {
+        padding: 6px 15px;
+        font-size: 14px;
+        margin: 0 3px;
+    }
+    
+    .color-picker {
+        gap: 8px;
+    }
+    
+    .color-btn {
+        width: 25px;
+        height: 25px;
+    }
+    
+    .signature-controls .row {
+        gap: 15px;
+    }
+    
+    .signature-controls .col-md-6 {
+        text-align: center;
+    }
+    
+    .font-options {
+        gap: 8px;
+    }
+    
+    .font-btn {
+        padding: 12px;
+    }
+    
+    .font-btn span {
+        font-size: 18px !important;
+    }
+    
+    .signature-preview-text {
+        font-size: 22px;
+    }
+    
+    .signature-actions .btn {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}
+
+/* iPhone Specific */
+@media (max-width: 480px) {
+    .signature-pad {
+        height: 120px;
+    }
+    
+    .signature-placeholder {
+        font-size: 16px;
+    }
+    
+    .signature-tabs .nav-pills .nav-link {
+        padding: 5px 12px;
+        font-size: 13px;
+    }
+    
+    .signature-preview-text {
+        font-size: 20px;
+    }
+    
+    .font-btn span {
+        font-size: 16px !important;
+    }
+}
+
+/* Touch Optimizations */
+@media (pointer: coarse) {
+    .signature-pad {
+        cursor: pointer;
+    }
+    
+    .color-btn {
+        width: 35px;
+        height: 35px;
+        margin: 2px;
+    }
+    
+    .signature-tabs .nav-pills .nav-link {
+        min-height: 44px; /* iOS touch target minimum */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .font-btn {
+        min-height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* Signature Animation */
+@keyframes signatureSuccess {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.signature-success {
+    animation: signatureSuccess 0.6s ease-in-out;
+}
+
+/* Export Button with Signature */
+.btn-warning {
+    background: linear-gradient(135deg, #ffc107 0%, #ff8c00 100%);
+    border: none;
+    color: white;
+    font-weight: 500;
+}
+
+.btn-warning:hover {
+    background: linear-gradient(135deg, #ff8c00 0%, #ffc107 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(255, 193, 7, 0.3);
+}
+

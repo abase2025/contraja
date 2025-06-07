@@ -1,0 +1,230 @@
+/* Melhorias Específicas para iOS e Android */
+
+/* Configurações PWA para iOS */
+@supports (-webkit-touch-callout: none) {
+    /* Específico para iOS */
+    body {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -webkit-tap-highlight-color: transparent;
+    }
+    
+    /* Melhor suporte para notch do iPhone */
+    .header {
+        padding-top: env(safe-area-inset-top, 20px);
+        padding-left: env(safe-area-inset-left, 15px);
+        padding-right: env(safe-area-inset-right, 15px);
+    }
+    
+    /* Ajustes para iPhone X e superiores */
+    .main-container {
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+    }
+}
+
+/* Melhorias para Android */
+@media screen and (max-width: 768px) {
+    /* Melhor suporte para teclado virtual Android */
+    .form-control:focus {
+        transform: none;
+        zoom: 1;
+    }
+    
+    /* Prevenir zoom automático em inputs no iOS */
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    select,
+    textarea {
+        font-size: 16px !important;
+        -webkit-appearance: none;
+        border-radius: 8px;
+    }
+}
+
+/* Melhorias para assinatura digital em touch devices */
+.signature-pad {
+    /* Melhor responsividade para diferentes tamanhos de tela */
+    width: 100% !important;
+    height: auto !important;
+    min-height: 200px;
+    max-height: 300px;
+    
+    /* Otimizações para touch */
+    touch-action: none;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+/* Melhorias para botões em dispositivos touch */
+@media (pointer: coarse) {
+    .btn {
+        min-height: 48px;
+        min-width: 48px;
+        padding: 12px 20px;
+        font-size: 16px;
+    }
+    
+    .nav-link {
+        min-height: 48px;
+        padding: 12px 16px;
+    }
+    
+    .form-control {
+        min-height: 48px;
+        padding: 12px 16px;
+        font-size: 16px;
+    }
+}
+
+/* Melhorias para orientação landscape em mobile */
+@media screen and (max-width: 768px) and (orientation: landscape) {
+    .header {
+        padding: 15px;
+    }
+    
+    .header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .contract-type-card {
+        padding: 15px;
+    }
+    
+    .signature-pad {
+        max-height: 150px;
+    }
+}
+
+/* Otimizações específicas para iPhone SE e dispositivos pequenos */
+@media screen and (max-width: 375px) {
+    .contract-type-card {
+        padding: 15px 10px;
+    }
+    
+    .card-icon {
+        font-size: 2.5rem;
+    }
+    
+    .contract-type-card h4 {
+        font-size: 1.1rem;
+    }
+    
+    .btn {
+        font-size: 14px;
+        padding: 10px 16px;
+    }
+}
+
+/* Melhorias para performance em dispositivos móveis */
+@media screen and (max-width: 768px) {
+    /* Reduzir animações para melhor performance */
+    * {
+        animation-duration: 0.2s !important;
+        transition-duration: 0.2s !important;
+    }
+    
+    /* Otimizar scroll */
+    .contract-preview {
+        -webkit-overflow-scrolling: touch;
+        overflow-scrolling: touch;
+    }
+    
+    /* Melhor renderização de texto */
+    body {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+    }
+}
+
+/* Suporte para modo escuro do sistema */
+@media (prefers-color-scheme: dark) {
+    /* Manter o design atual, mas preparar para futuras implementações */
+    :root {
+        --text-color: #333;
+        --bg-color: #fff;
+    }
+}
+
+/* Melhorias para acessibilidade em dispositivos móveis */
+@media screen and (max-width: 768px) {
+    /* Melhor contraste para leitura */
+    .text-muted {
+        color: #666 !important;
+    }
+    
+    /* Espaçamento adequado para touch */
+    .form-group {
+        margin-bottom: 20px;
+    }
+    
+    /* Indicadores visuais mais claros */
+    .form-control:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.25);
+    }
+}
+
+/* Otimizações para PWA em dispositivos móveis */
+@media (display-mode: standalone) {
+    /* Quando executado como PWA */
+    .header {
+        padding-top: 30px; /* Espaço para status bar */
+    }
+    
+    body {
+        background-attachment: scroll; /* Melhor performance */
+    }
+}
+
+/* Melhorias para impressão em dispositivos móveis */
+@media print {
+    /* Otimizar para impressão mobile */
+    .signature-pad {
+        border: 1px solid #000;
+        page-break-inside: avoid;
+    }
+    
+    .contract-preview {
+        font-size: 12px;
+        line-height: 1.4;
+    }
+}
+
+/* Suporte para dispositivos com densidade de pixels alta */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    /* Melhor renderização em telas Retina */
+    .signature-pad {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* Melhorias específicas para tablets */
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+    .contract-type-card {
+        padding: 30px 20px;
+    }
+    
+    .signature-pad {
+        max-height: 250px;
+    }
+    
+    .btn {
+        min-height: 44px;
+        padding: 12px 24px;
+    }
+}
+
+/* Otimizações para conexões lentas */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AssinaFácil">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#667eea">
+    <meta name="msapplication-navbutton-color" content="#667eea">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="format-detection" content="telephone=no">
+    <title>AssinaFácil - Gerador de Contratos</title>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+    
+    <!-- Sistema de Analytics Personalizado -->
+    <script>
+        // Configuração do sistema de analytics
+        window.AssinaFacilAnalytics = {
+            userId: 'user_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9),
+            sessionId: 'session_' + Date.now(),
+            startTime: Date.now(),
+            events: [],
+            email: 'rlambaia2023@gmail.com'
+        };
+    </script>
+    
+    <!-- PWA Icons -->
+    <link rel="apple-touch-icon" sizes="180x180" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23667eea'/><text y='70' font-size='60' text-anchor='middle' x='50' fill='white'>📄</text></svg>">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23667eea'/><text y='70' font-size='60' text-anchor='middle' x='50' fill='white'>📄</text></svg>">
+    
+    <!-- CSS e JS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+    
+    <!-- Sistema de Analytics AssinaFácil -->
+    <script src="analytics.js"></script>
+    
+    <!-- Sistema de Relatórios AssinaFácil -->
+    <script src="reports.js"></script>
+    
+    <!-- Melhorias Mobile iOS e Android -->
+    <script src="mobile-enhancements.js"></script>
+    
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mobile-optimizations.css">
+    
+    <!-- Preload para melhor performance mobile -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="main-container">
+            <!-- Header -->
+            <div class="header">
+                <h1><i class="fas fa-signature"></i> AssinaFácil</h1>
+                <p>Sistema completo para criação e gestão de contratos</p>
+                <small>Desenvolvido por Harrison R. Costa</small>
+            </div>
+            
+            <!-- Seletor de Tipo de Contrato -->
+            <div class="contract-selector" id="contractSelector">
+                <div class="selector-header">
+                    <h3><i class="fas fa-file-contract"></i> Escolha o Tipo de Contrato</h3>
+                    <p>Selecione o tipo de contrato que deseja gerar</p>
+                </div>
+                
+                <div class="row justify-content-center">
+                    <div class="col-md-5 mb-4">
+                        <div class="contract-type-card" onclick="selecionarTipoContrato('imovel')">
+                            <div class="card-icon">
+                                <i class="fas fa-home"></i>
+                            </div>
+                            <h4>Contrato de Imóvel</h4>
+                            <p>Locação residencial, comercial ou mista</p>
+                            <ul class="features-list">
+                                <li><i class="fas fa-check"></i> Apartamentos e casas</li>
+                                <li><i class="fas fa-check"></i> Locação residencial</li>
+                                <li><i class="fas fa-check"></i> Dados completos do imóvel</li>
+                                <li><i class="fas fa-check"></i> Cláusulas específicas</li>
+                            </ul>
+                            <div class="card-buttons">
+                                <div class="card-button primary" onclick="event.stopPropagation(); selecionarTipoContrato('imovel')">
+                                    <span>Criar Novo <i class="fas fa-plus"></i></span>
+                                </div>
+                                <div class="card-button secondary" onclick="event.stopPropagation(); abrirUploadContrato('imovel')">
+                                    <span>Carregar Existente <i class="fas fa-upload"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-5 mb-4">
+                        <div class="contract-type-card" onclick="selecionarTipoContrato('veiculo')">
+                            <div class="card-icon">
+                                <i class="fas fa-car"></i>
+                            </div>
+                            <h4>Contrato de Veículo</h4>
+                            <p>Locação de automóveis e motocicletas</p>
+                            <ul class="features-list">
+                                <li><i class="fas fa-check"></i> Carros e motos</li>
+                                <li><i class="fas fa-check"></i> Uso pessoal ou aplicativo</li>
+                                <li><i class="fas fa-check"></i> Dados completos do veículo</li>
+                                <li><i class="fas fa-check"></i> Seguro e caução</li>
+                            </ul>
+                            <div class="card-buttons">
+                                <div class="card-button primary" onclick="event.stopPropagation(); selecionarTipoContrato('veiculo')">
+                                    <span>Criar Novo <i class="fas fa-plus"></i></span>
+                                </div>
+                                <div class="card-button secondary" onclick="event.stopPropagation(); abrirUploadContrato('veiculo')">
+                                    <span>Carregar Existente <i class="fas fa-upload"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Interface Principal (oculta inicialmente) -->
+            <div class="main-interface" id="mainInterface" style="display: none;">
+                <!-- Breadcrumb -->
+                <div class="breadcrumb-container">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="#" onclick="voltarSeletor()">
+                                    <i class="fas fa-home"></i> Início
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" id="breadcrumbTipo">Contrato</li>
+                        </ol>
+                    </nav>
+                </div>
+                
+                <!-- Tabs de Navegação -->
+                <ul class="nav nav-tabs" id="mainTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="form-tab" data-bs-toggle="tab" data-bs-target="#form-pane" type="button" role="tab">
+                            <i class="fas fa-edit"></i> Editar Dados
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="preview-tab" data-bs-toggle="tab" data-bs-target="#preview-pane" type="button" role="tab">
+                            <i class="fas fa-eye"></i> Visualizar Contrato
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="clear-tab" type="button" role="tab" onclick="limparFormulario()">
+                            <i class="fas fa-eraser"></i> Limpar Formulário
+                        </button>
+                    </li>
+                </ul>
+                
+                <div class="tab-content" id="mainTabContent">
+                    <!-- Aba de Formulário -->
+                    <div class="tab-pane fade show active" id="form-pane" role="tabpanel">
+                        <form id="contratoForm">
+                            <!-- Formulários dinâmicos serão inseridos aqui -->
+                            <div id="formContainer"></div>
+                            
+                            <div class="text-center mt-4">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-save"></i> Salvar Dados
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Aba de Visualização -->
+                    <div class="tab-pane fade" id="preview-pane" role="tabpanel">
+                        <div class="contrato-preview" id="contratoPreview">
+                            <div class="text-center">
+                                <i class="fas fa-file-contract fa-3x text-muted mb-3"></i>
+                                <p class="text-muted">Preencha os dados na aba "Editar Dados" para visualizar o contrato</p>
+                            </div>
+                        </div>
+                        
+                        <div class="export-buttons">
+                            <button type="button" class="btn btn-success" onclick="exportarPDF()">
+                                <i class="fas fa-file-pdf"></i> Baixar PDF
+                            </button>
+                            <button type="button" class="btn btn-info" onclick="exportarWord()">
+                                <i class="fas fa-file-word"></i> Baixar Word
+                            </button>
+                            <button type="button" class="btn btn-primary" onclick="imprimir()">
+                                <i class="fas fa-print"></i> Imprimir
+                            </button>
+                            <button type="button" class="btn btn-success" onclick="abrirAssinaturaDigital('locador')">
+                                <i class="fas fa-signature"></i> Assinatura do Locador
+                            </button>
+                            <button type="button" class="btn btn-info" onclick="abrirAssinaturaDigital('locatario')">
+                                <i class="fas fa-signature"></i> Assinatura do Locatário
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer">
+                <p>&copy; 2025 AssinaFácil - Sistema de Contratos - Desenvolvido por Harrison R. Costa</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Upload Modal -->
+    <div class="modal fade" id="uploadModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-upload text-primary"></i>
+                        Carregar Contrato Existente
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="upload-container">
+                        <div class="upload-info mb-4">
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle"></i>
+                                <strong>Como funciona:</strong>
+                                <ul class="mb-0 mt-2">
+                                    <li>Faça upload do seu contrato em PDF ou Word</li>
+                                    <li>O sistema extrairá automaticamente os dados</li>
+                                    <li>Você poderá editar e personalizar as informações</li>
+                                    <li>Gere uma nova versão otimizada do contrato</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-content">
+                                <div class="upload-icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </div>
+                                <h4>Arraste seu contrato aqui</h4>
+                                <p>ou clique para selecionar o arquivo</p>
+                                <div class="supported-formats">
+                                    <span class="format-badge">PDF</span>
+                                    <span class="format-badge">DOC</span>
+                                    <span class="format-badge">DOCX</span>
+                                </div>
+                            </div>
+                            <input type="file" id="fileInput" accept=".pdf,.doc,.docx" style="display: none;">
+                        </div>
+                        
+                        <div class="upload-progress" id="uploadProgress" style="display: none;">
+                            <div class="progress mb-3">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                                     role="progressbar" style="width: 0%"></div>
+                            </div>
+                            <div class="upload-status">
+                                <i class="fas fa-spinner fa-spin"></i>
+                                <span id="uploadStatusText">Processando arquivo...</span>
+                            </div>
+                        </div>
+                        
+                        <div class="upload-result" id="uploadResult" style="display: none;">
+                            <div class="alert alert-success">
+                                <i class="fas fa-check-circle"></i>
+                                <strong>Sucesso!</strong> Dados extraídos com sucesso.
+                                <div class="mt-2">
+                                    <small class="text-muted">
+                                        <span id="extractedDataCount">0</span> campos preenchidos automaticamente
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                    <button type="button" class="btn btn-primary" id="processUploadBtn" disabled>
+                        <i class="fas fa-magic"></i> Processar e Editar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Signature Modal -->
+    <div class="modal fade" id="signatureModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-signature text-warning"></i>
+                        Assinatura Digital
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="signature-container">
+                        <div class="signature-info mb-4">
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle"></i>
+                                <strong>Como assinar:</strong>
+                                <ul class="mb-0 mt-2">
+                                    <li><strong>Desktop:</strong> Use o mouse para desenhar sua assinatura</li>
+                                    <li><strong>Mobile:</strong> Use o dedo para assinar na tela touch</li>
+                                    <li><strong>Tablet:</strong> Use stylus ou dedo para maior precisão</li>
+                                    <li>Sua assinatura será salva no contrato automaticamente</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="signature-tabs mb-3">
+                            <ul class="nav nav-pills justify-content-center" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="draw-tab" data-bs-toggle="pill" data-bs-target="#draw-signature" type="button" role="tab">
+                                        <i class="fas fa-pen"></i> Desenhar
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="type-tab" data-bs-toggle="pill" data-bs-target="#type-signature" type="button" role="tab">
+                                        <i class="fas fa-keyboard"></i> Digitar
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        <div class="tab-content">
+                            <!-- Desenhar Assinatura -->
+                            <div class="tab-pane fade show active" id="draw-signature" role="tabpanel">
+                                <div class="signature-pad-container">
+                                    <div class="signature-instructions">
+                                        <p class="text-center text-muted mb-3">
+                                            <i class="fas fa-hand-pointer"></i>
+                                            Desenhe sua assinatura na área abaixo
+                                        </p>
+                                    </div>
+                                    <div class="signature-pad-wrapper">
+                                        <canvas id="signaturePad" class="signature-pad"></canvas>
+                                        <div class="signature-overlay">
+                                            <span class="signature-placeholder">Assine aqui</span>
+                                        </div>
+                                    </div>
+                                    <div class="signature-controls mt-3">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label class="form-label">Cor da caneta:</label>
+                                                <div class="color-picker">
+                                                    <button type="button" class="color-btn active" data-color="#000000" style="background: #000000;"></button>
+                                                    <button type="button" class="color-btn" data-color="#0066cc" style="background: #0066cc;"></button>
+                                                    <button type="button" class="color-btn" data-color="#cc0000" style="background: #cc0000;"></button>
+                                                    <button type="button" class="color-btn" data-color="#009900" style="background: #009900;"></button>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label class="form-label">Espessura:</label>
+                                                <input type="range" class="form-range" id="penWidth" min="1" max="5" value="2">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Digitar Assinatura -->
+                            <div class="tab-pane fade" id="type-signature" role="tabpanel">
+                                <div class="typed-signature-container">
+                                    <div class="signature-instructions">
+                                        <p class="text-center text-muted mb-3">
+                                            <i class="fas fa-keyboard"></i>
+                                            Digite seu nome para criar uma assinatura estilizada
+                                        </p>
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control form-control-lg" id="typedSignature" placeholder="Digite seu nome completo">
+                                    </div>
+                                    <div class="signature-fonts">
+                                        <label class="form-label">Escolha o estilo:</label>
+                                        <div class="font-options">
+                                            <button type="button" class="font-btn active" data-font="signature1">
+                                                <span style="font-family: 'Brush Script MT', cursive; font-size: 24px;">Nome Exemplo</span>
+                                            </button>
+                                            <button type="button" class="font-btn" data-font="signature2">
+                                                <span style="font-family: 'Lucida Handwriting', cursive; font-size: 20px;">Nome Exemplo</span>
+                                            </button>
+                                            <button type="button" class="font-btn" data-font="signature3">
+                                                <span style="font-family: 'Dancing Script', cursive; font-size: 26px;">Nome Exemplo</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="typed-signature-preview mt-3">
+                                        <div class="signature-preview-box">
+                                            <span id="signaturePreview" class="signature-preview-text"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="signature-actions mt-4">
+                            <div class="row">
+                                <div class="col-6">
+                                    <button type="button" class="btn btn-outline-secondary w-100" onclick="limparAssinatura()">
+                                        <i class="fas fa-eraser"></i> Limpar
+                                    </button>
+                                </div>
+                                <div class="col-6">
+                                    <button type="button" class="btn btn-outline-primary w-100" onclick="visualizarAssinatura()">
+                                        <i class="fas fa-eye"></i> Visualizar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="signature-preview-result mt-3" id="signatureResult" style="display: none;">
+                            <div class="alert alert-success">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-check-circle me-2"></i>
+                                    <div>
+                                        <strong>Assinatura criada com sucesso!</strong>
+                                        <div class="signature-preview-mini mt-2">
+                                            <img id="signaturePreviewImg" src="" alt="Preview da assinatura" style="max-height: 60px; border: 1px solid #ddd; border-radius: 4px;">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                    <button type="button" class="btn btn-warning" id="saveSignatureBtn" onclick="salvarAssinatura()" disabled>
+                        <i class="fas fa-save"></i> Salvar Assinatura
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Loading Modal -->
+    <div class="modal fade" id="loadingModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Carregando...</span>
+                    </div>
+                    <p class="mt-3">Processando...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+
